@@ -1,0 +1,65 @@
+<html>
+    <head>
+    <title>
+        quiz
+    </title>
+    <style>
+        .buttons {
+            padding: 50px;
+        }
+
+    </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    </head>
+    <body style="background-color:#ccffff;">
+        <h1><center>QUIZ</center></h1>
+        <div class="row" style="height:300px; background-color:lightgreen;">
+        <p id="question"></p>
+        <!-- <p id = "text"></p> -->
+        <p id = "options" style="padding-left:50px;"></p>
+
+        </div>
+        <div class="buttons">
+        <button style=" width:120px; height:50px; background-color:lightblue; border-radius:10px;font-size:25px;"onclick="prev()">previous</button>
+        <button style="float:right; width:100px; height:50px; background-color:lightblue; border-radius:10px;font-size:25px;" onclick = "next()">next</button>
+        </div>
+        <script>
+        var data='{"questions":[{"question":"2+2=4","option1":"True","option2":"False","hints":"basic math","answer":"True"},{"question":"0==True","option1":"True","option2":"False","hints":"1 is True","answer":"False"}]}'; 
+        var object = JSON.parse(data);
+        var i = 0
+        execute(i);
+        function prev() {
+            if(i<=0){
+                i = 0;
+            } else {
+                i= i-1;
+            }
+            execute(i);
+        }
+        function next() {
+            if(i >= 1) {
+                i = 1;
+            } else {
+                i = i+1;
+            }
+            execute(i);
+        }
+        function execute(index) {
+            document.getElementById("question").innerHTML = '<h3 style="padding-left:50px;">'+(i+1)+')'+object.questions[index].question+'</h3>';
+            document.getElementById("options").innerHTML = '<button onclick = \"hint('+index+')\">hint</button><br><p id="text"></p><br><input type="radio" name="options" value=\"object.questions['+index+'].option1\" onclick = \"check(object.questions['+index+'].option1,'+index+')\">'+object.questions[index].option1+'<br><input type="radio" name="options" value=\"object.questions['+index+'].option2\" onclick=\"check(object.questions['+index+'].option2,'+index+')\">'+object.questions[index].option2+'<p id = "text1"></p>';
+        
+        }
+        function check(v, index) {
+            if(v == object.questions[index].answer) {
+                document.getElementById("text1").innerHTML = '<div class="alert alert-success alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>"Correct"</div>';   
+            } else {
+                document.getElementById("text1").innerHTML =  '<div class=\"alert alert-danger ale alert-dismissible\"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Incorrect</div>';   
+            }
+        }
+        function hint(i) {
+            document.getElementById("text").innerHTML = '<h5>'+"Hint is:"+object.questions[i].hints+'</h5>';
+            
+        }
+        </script>
+    </body>
+</html>
