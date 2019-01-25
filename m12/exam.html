@@ -1,0 +1,102 @@
+<html>
+    <head>
+        <title>
+            exam
+        </title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <style>
+            
+            .container {
+               /* padding-top:50px;
+               padding-left:300px;  */
+               border:5px solid gray;
+               border-radius:5px;
+               padding-bottom: 20px;
+               background-color:lightgray;
+            }
+            .messages{
+                padding-left:100px;
+                padding-top:30px;
+            }
+            h1 {
+                text-align:center;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>welcome</h1>
+        <div class="container">
+            <!-- <form method="POST" name="form" onsubmit="check(),document.getElementById('uname').value = ''" action="">  -->
+            <br><br>
+            <label>
+                <b>User Name:</b>
+            </label>
+            <input type="text" placeholder="Enter Username" name="uname" id = "uname">
+            <br><br>
+            <label>
+                    <b>Comment</b>
+                </label>
+                <br>
+                <textarea rows="4" cols="30" id="comment"></textarea>
+                <br><br>
+            <label>
+                <b>Password</b>
+                <input type="password" placeholder="Enter Password" name="pwd" id="password">
+            </label>
+            <br>
+            <button onclick="check(), document.getElementById('uname').value = '', document.getElementById('password').value = '', document.getElementById('comment').value = ''" value="Refresh">submit</button>
+            <!-- <input type="submit"> -->
+            <!-- </form> -->
+            
+        </div>
+        <div class="messages">
+            <h3>list of messages:</h3>            
+            <p id="temp" id="content"></p>
+        </div>
+        <script>
+            var listofmessages=[];
+            var messages="";
+            var flag=false;
+            function check() {
+                // var index=-1;
+                password =["abc","1234","abcd"];
+                var un = document.getElementById("uname").value;
+                var comment = document.getElementById("comment").value;
+                if(un==null ||un==""|| comment==null||comment=="") {
+                    alert("Please Fill All Required Field");
+                    return;
+                } else {
+                    var p = document.getElementById("password").value;
+                    console.log(p);
+                    for(i =0; i <password.length;i++) {
+                        if(password[i]===p){
+                            // document.getElementById("temp").innerHTML ='<h1>'+comment+'</h1>';
+                            var mess= {"name":un, "comment":comment};
+                            // var mess = un+':'+'<span style="font-size:20px;">'+comment+'</span>'+'</br>';
+                            flag=true;
+                            // messages='<span style="font-size:25px;">'+comment+'</span><br>'+un+'<br>'+messages;
+                            listofmessages.unshift(mess); 
+                            // index=index+1;
+                        }
+                    }
+                    console.log(flag);
+                    if(!flag) {
+                        alert("Enter correct password");
+                    }
+
+                    // console.log(listofmessages);
+                    // for (i=0;i< listofmessages.length;i++){
+                    //     document.getElementById("temp").innerHTML =listofmessages[i];  
+                    // }
+                    // console.log(listofmessages[index].name);
+                    messages = '<span style="font-size:25px;">'+listofmessages[0].comment+'</span><br>'+listofmessages[0].name+'<br>'+messages;
+                    document.getElementById("temp").innerHTML =messages;
+                }
+                
+            }
+            
+        </script>
+    </body>
+</html>
