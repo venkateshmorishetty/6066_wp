@@ -1,34 +1,35 @@
-<h1>this is home</h1>
+<!-- <h1>this is home</h1> -->
 <html>
     <head>
 
         <title>home</title>
-        <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script> -->
-        <script src = "list.js"></script>
-        <style>
-            /* .image{
-                width:100px;
-                height:100px;
-            } */
-        </style>
+        <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
+        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+        <script src ="todolist.js"></script>
+
+        <script src = "/controllers/controller.js"></script>
+       
     </head>
     <body>
         
-        <p id="title"></p>
-        <p id="description"></p>
-        <p id="image"></p>
-        <p id="quantity"></p>
-        <p id="edit"></p>
-        
-        <button onclick="prev()">previous</button>
-        
-        <button onclick="next()">next</button>
-        <button onclick="remove()">delete</button>
-        <button onclick="edit()">edit</button>
+        <% for (var i=0;i < object.length; i++){ %>
+            <h3><%=  object[i].title %></h3>
+            <p><%=  object[i].description %></p>
+            <img src="<%= object[i].image %>">
+           <h5> <%=  object[i].quantity %></h5>
+            <form method="post" action="/home/<%=i%>">
+            new name:<input type="text" name="newtitle" id ="name"> 
+            new description:<input type="text" name="newdescription" id="2">
+            newquantity:<input type="text" name="newquantity" id="3">
+            <!-- <button name = "submit" type="submit" onclick=update()>update</button> -->
+            <input type = "submit" name="upate">
+            </form>
+            <button name ="<%=object[i].title%>">del</button>
 
+        <% } %>
         
-
         
+        </div>  
         
     </body>
 </html>
