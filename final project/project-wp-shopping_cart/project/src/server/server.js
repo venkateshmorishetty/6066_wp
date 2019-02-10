@@ -3,9 +3,11 @@ const bodyParser =require('body-parser');
 const app=express();
 const fs = require('fs');
 var mongoose = require('mongoose');
+
 mongoose.connect('mongodb://project:project123@ds123625.mlab.com:23625/project', { useNewUrlParser: true } );
 
- 
+
+
 
 
 var userSchema = new mongoose.Schema({
@@ -19,45 +21,30 @@ var productSchema = new mongoose.Schema({
     title:String,
     description:String,
     image:String,
-    quantity:String,
+    quantity:Number,
     cat:String,
     price:String
 });
 
-var comments = new mongoose.Schema({
+var review = new mongoose.Schema({
     name:String,
-    review:String
+    review:String,
+    pname:String
 });
+
+
 
  var user = mongoose.model('user',userSchema);
  var product = mongoose.model('product',productSchema);
 
-var comments = mongoose.model('comments',comments);
+var review = mongoose.model('reviews',review);
 
-
-
-//  var itemOne = product({"title": "Pexels","description": "FernandoArcos","image": "watch1.jpg","cat": "Watches","price": "12000"}).save(function(err){
-//         if(err) throw err;
-//         console.log(err);
-//         console.log("item saved");
-//      });
-
-// fs.readFile('./server/categories.json', function(err, data){
-//     if(err) throw err;
-//     var jsondata = JSON.parse(data);
-//     for(var i = 0;i<jsondata.length;i++){
-//         var itemOne = product(jsondata[i]).save(function(err){
-//             if(err) throw err;
-//             console.log(err);
-//             console.log("product data inserted")
-//         });
-//     }
-// });
-
- 
 console.log("db connected");
 
 app.use(bodyParser.json());
+
+
+
 
 
 app.all("/*", function(req, res, next){
@@ -82,6 +69,41 @@ app.post('/temp',function(req, res){
     });
 });
 
+app.put('/update',function(req, res){
+    var val = 0;
+    product.find({title:req.body.title},function(err, docs){
+        
+        val = docs[0].quantity;
+        
+        val = val - req.body.quantity;
+        if(err) console.log(err);
+        else {
+            product.findOneAndUpdate({ title:req.body.title},{$set:{quantity:val}},function(err,doc){
+                if(err) throw err;
+                console.log(doc);
+            })
+        }
+
+    })
+});     
+
+app.post('/reviews',function(req, res){
+    var temp = req.body;
+    
+    var newUser = review(temp).save(function(err,data){
+        
+        if(err){
+            throw err;
+        } else {
+            console.log("review inserted");
+        }
+
+    });
+    
+    
+    
+});
+
 app.get('/getproduct', function(req,res){
     product.find({},function(err,data){
         if(err) throw err;
@@ -90,28 +112,25 @@ app.get('/getproduct', function(req,res){
 
     });
 });
-app.get('/getdetails',function(req, res){
-    //get data from mongoose db and pass it to the view
-    user.find({}, function(err, data){
+
+app.get('/getreviews', function(req,res){
+    review.find({},function(err,data){
         if(err) throw err;
         res.send(data);
-        
-        // res.render('todo', {todos: data});
+
 
     });
 });
-app.post('/postcomment',function(req, res){
-    // res.send(req.body);
-    console.log("iam comment");
-})
-// app.post('/getcomment',function(req, res){
-//     var data = req.body;
-//     comments(data).save(function(err,data){
-//         if(err){
-//             throw err;
-//         }
-//         console.log("comments inserted");
-//     })
-// })
+
+app.get('/getdetails',function(req, res){
+
+    user.find({}, function(err, data){
+        if(err) throw err;
+        res.send(data);
+
+
+    });
+});
+
 app.listen(3000);
 console.log("server started");

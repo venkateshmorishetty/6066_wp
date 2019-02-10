@@ -19,8 +19,12 @@ export class CheckoutComponent implements OnInit {
 
   checkmethod() {
     this.checkpop = !this.checkpop;
+    
+    
+    
   }
   completedmethod() {
+    this.dataservice.update(this.dataservice.cartindex);
     this.finishmsg = !this.finishmsg;
   }
   

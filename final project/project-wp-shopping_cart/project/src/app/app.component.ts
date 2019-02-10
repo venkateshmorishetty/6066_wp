@@ -23,12 +23,11 @@ export class AppComponent {
 
   title = 'Registration';
   constructor(private data: Dataservice, private http: HttpClient) {
-    // this.products = data.products;
+
     var p = this.http.get('http://127.0.0.1:3000/getproduct');
     p.subscribe(k => this.products = k);
 
-    // this.loginsucesssymbol = data.loginsucesssymbol;
-    // console.log(data.loginsucesssymbol);
+    
 
   }
   ngOnInit() {

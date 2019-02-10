@@ -17,18 +17,11 @@
    
 
 
-<!-- hari code-->
+
 <div class="row">    
   <div class="col-xs-8 col-xs-offset-2">
       <div class="input-group">
-          <!-- <div class="input-group-btn search-panel">
-              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                  <span id="search_concept"> popular items</span> <span class="caret"></span>
-              </button>
-              <ul class="dropdown-menu" role="menu">
-                <li *ngFor="let item of productscat"><a href="product/{{item}}">{{item}}</a></li>
-              </ul>
-          </div> -->
+         
           
           <input type="hidden" name="search_param" value="all" id="search_param">         
           <input type="text" class="form-control" name="x" placeholder="Search by name " list="products" [(ngModel)] = "searchname" (click)="temp()">
@@ -40,10 +33,10 @@
 
 
           <span class="input-group-btn">
-            <!-- <button (click) = searchfunction()> here test</button> -->
+           
               <button class="btn btn-default" type="submit" > <a routerLink="product/{{searchname}}" >Search</a><span></span></button>
           </span><span routerLink = "/cart" class="cart">Cart<span class="glyphicon glyphicon-shopping-cart"></span></span>
-          <div *ngIf=this.data.loginsuccesssymbol><p>welcome {{data.getvaliduser()}}</p></div>
+          <div *ngIf=this.data.loginsuccesssymbol><p>welcome <a href='/mainpage'>{{data.getvaliduser()}}</a></p></div>
           
       
         </div>
